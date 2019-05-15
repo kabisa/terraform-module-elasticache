@@ -32,7 +32,7 @@ resource "aws_elasticache_cluster" "redis" {
 
 /* ElastiCache - Subnet Group */
 resource "aws_elasticache_subnet_group" "redis" {
-  name       = "${module.label.name}-redis-subnet-group"
+  name       = "${module.label.id}-redis-subnet-group"
   subnet_ids = ["${var.private_subnets}"]
 }
 
@@ -42,7 +42,7 @@ Security Groups
 
 /* Security Groups - ElastiCache */
 resource "aws_security_group" "redis_sg" {
-  name        = "${module.label.name}-sg"
+  name        = "${module.label.id}-sg"
   description = "Security Group for ElastiCache Redis"
   vpc_id      = "${var.vpc_id}"
   tags        = "${module.label.tags}"
@@ -58,4 +58,3 @@ resource "aws_security_group_rule" "ingress_redis" {
   security_group_id        = "${aws_security_group.redis_sg.id}"
   source_security_group_id = "${var.container_instance_sg_id}"
 }
-
